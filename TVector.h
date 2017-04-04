@@ -7,7 +7,7 @@ template<typename T>
 class TVector
 {
 public:
-    using value_type = int;
+    using value_type = T;
     using size_type = size_t;
     using iterator = value_type *;
     using reference = value_type&;
