@@ -74,7 +74,8 @@ public:
         value_type * ptr = new value_type[size];
         if(Ptr != nullptr)
         {
-            memcpy(ptr, Ptr, Count * sizeof(value_type));
+            //memcpy(ptr, Ptr, Count * sizeof(value_type));
+            std::copy(this->begin(), this->end(), ptr);
             delete[] Ptr;
         }
         Ptr = ptr;
@@ -85,7 +86,9 @@ public:
     TVector(const TVector& rhs)
     {
         this->reserve(rhs.InternalCapacity);
-        memcpy(Ptr, rhs.Ptr, rhs.Count * sizeof(size_type));
+        Count = rhs.Count;
+        //memcpy(Ptr, rhs.Ptr, rhs.Count * sizeof(size_type));
+        std::copy(rhs.begin(), rhs.end(), this->begin());
     }
 
     TVector& operator=(const TVector& rhs)
@@ -96,12 +99,13 @@ public:
         }
 
         this->reserve(rhs.InternalCapacity);
-        memcpy(Ptr, rhs.Ptr, rhs.Count * sizeof(size_type));
+        //memcpy(Ptr, rhs.Ptr, rhs.Count * sizeof(size_type));
         Count = rhs.Count;
+        std::copy(rhs.begin(), rhs.end(), this->begin());
 
         return *this;
     }
-
+    
     void push_back(const value_type& value)
     {
         if(InternalCapacity == 0)
